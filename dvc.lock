@@ -1,0 +1,88 @@
+schema: '2.0'
+stages:
+  train:
+    cmd: python src/retrain_model.py data/train.csv
+    deps:
+    - path: data/train.csv
+      hash: md5
+      md5: d19e97608051335b21876964e5fbad26
+      size: 12193089
+    - path: src/retrain_model.py
+      hash: md5
+      md5: 15625650d71597f553982336f46bba37
+      size: 11493
+    outs:
+    - path: models/model.pkl
+      hash: md5
+      md5: 2a85230484b85b646ed0d24c265a3e71
+      size: 7198494
+  test:
+    cmd: python src/test_model.py models/model.pkl data/test.csv
+    deps:
+    - path: data/test.csv
+      hash: md5
+      md5: e70c499bd30bc487549e887889a3e5c4
+      size: 3037688
+    - path: models/model.pkl
+      hash: md5
+      md5: 2a85230484b85b646ed0d24c265a3e71
+      size: 7198494
+    - path: src/test_model.py
+      hash: md5
+      md5: e5d4f3ef7c0a0916df4b6c8be5bb6069
+      size: 3765
+    outs:
+    - path: outputs/metrics.json
+      hash: md5
+      md5: 9f81ad0a48d536b53d7b6bb43ec62310
+      size: 152
+  register:
+    cmd: python src/register_model.py models/model.pkl
+    deps:
+    - path: models/model.pkl
+      hash: md5
+      md5: 2a85230484b85b646ed0d24c265a3e71
+      size: 7198494
+    - path: src/register_model.py
+      hash: md5
+      md5: 23dd385a6b5d9ac015b7417742580861
+      size: 679
+  staging:
+    cmd: python src/stage_model.py models/model.pkl
+    deps:
+    - path: models/model.pkl
+      hash: md5
+      md5: 2a85230484b85b646ed0d24c265a3e71
+      size: 7198494
+    - path: src/stage_model.py
+      hash: md5
+      md5: ee01d9b88d06212fd2bdd663555f425f
+      size: 1073
+  production:
+    cmd: python src/transition_model.py models/model.pkl
+    deps:
+    - path: models/model.pkl
+      hash: md5
+      md5: 2a85230484b85b646ed0d24c265a3e71
+      size: 7198494
+    - path: src/transition_model.py
+      hash: md5
+      md5: 95e23880c3d061d4ff7259ce68f5cdae
+      size: 1083
+  deploy:
+    cmd: ./run_flask.sh
+    deps:
+    - path: app/app.py
+      hash: md5
+      md5: 7926697282ec4e1d157ecad0036a7548
+      size: 3349
+    - path: models/model.pkl
+      hash: md5
+      md5: 2a85230484b85b646ed0d24c265a3e71
+      size: 7198494
+    outs:
+    - path: deployed/
+      hash: md5
+      md5: 7e70ba89ce3e8222dc8ddf2d23249b4e.dir
+      size: 7210484
+      nfiles: 3

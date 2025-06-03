@@ -1,0 +1,14 @@
+mlflow
+joblib
+flask
+numpy
+scikit-learn
+pandas
+catboost
+ngboost
+lightgbm
+xgboost
+matplotlib
+seaborn
+dvc[all]
+gunicorn

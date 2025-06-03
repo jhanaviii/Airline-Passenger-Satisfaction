@@ -1,0 +1,43 @@
+stages:
+  train:
+    cmd: python src/retrain_model.py data/train.csv
+    deps:
+      - src/retrain_model.py
+      - data/train.csv
+    outs:
+      - models/model.pkl
+
+  test:
+    cmd: python src/test_model.py models/model.pkl data/test.csv 
+    deps:
+      - src/test_model.py
+      - models/model.pkl
+      - data/test.csv
+    outs:
+      - outputs/metrics.json
+    
+  register:
+    cmd: python src/register_model.py models/model.pkl 
+    deps:
+      - src/register_model.py
+      - models/model.pkl
+      
+  staging:
+    cmd: python src/stage_model.py models/model.pkl 
+    deps:
+      - src/stage_model.py
+      - models/model.pkl
+    
+  production:
+    cmd: python src/transition_model.py models/model.pkl 
+    deps:
+      - src/transition_model.py
+      - models/model.pkl
+
+  deploy:
+    cmd: ./run_flask.sh
+    deps:
+      - app.py
+      - models/model.pkl
+    outs:
+      - deployed/

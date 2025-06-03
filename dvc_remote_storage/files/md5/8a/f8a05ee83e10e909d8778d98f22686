@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airline Passenger Satisfaction Classification</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #694306;
+        }
+        .navbar-brand {
+            display: block;
+            margin: auto;
+            color: #c209d6;
+            font-weight: bold;
+            font-family: "Helvetica";
+        }
+        .submit-button {
+            display: block;
+            margin: auto;
+        }
+        p {
+            text-align: center;
+        }
+        p:hover {
+            filter: brightness(250%) saturate(100%);
+        }
+        .card {
+            display: block;
+            margin: auto;
+            text-align: center;
+        }
+        table {
+            text-align: center; 
+        }
+        .table {
+            margin: 2rem auto;
+            width: auto !important; 
+        }
+        th, td {
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 1rem;
+            color: #99e889;
+        }
+        th {
+            color: #0e3405;
+            font-size: 1.4rem;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        h5 {
+            font-weight: bold;
+            font-family: "Helvetica",sans;
+            color: #c24b4a;
+            font-size: 1.8rem;
+        }
+        h1{
+            color: #5c6ad2;
+            font-family: 'Georgia', serif;
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        .first_row {
+            margin-top: 5rem;
+        }
+        .last_row {
+            margin-bottom: 2rem;
+        }
+        .card {
+            margin: 0 auto;
+            float: none;
+            margin-bottom: 10px;
+            background-color: #e6e889;
+            border: 2px solid #77346b;
+            border-width: 0.5rem;
+            size: 6rem;
+        }
+        .copyright{
+            color: #6e550b;
+            font-size: 1.5rem;
+            font-family: 'Arial',sans-serif;
+            font-weight: bold;
+        }
+        .predict-dec {
+            text-align: center;
+            font-weight: bold;
+            color: #177a1c;
+            font-size: 2rem;
+            font-family: 'Helvetica',sans-serif;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand mb-0 h1"><h1>Airline Passenger Satisfaction Classification</h1></span>
+    </nav>
+    <div class="container">
+        <form action="/predict" method="post">
+            <div class="row first_row">
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Inflight Wifi Service:</h5>
+                            <input type="number" min="0" max="5" step="1" name="inflight_wifi_service" id="inflight_wifi_service" required="required">
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Flight Distance:</h5>
+                            <input type="number" min="31.0" max="3736.5" step="0.1" name="flight_distance" id="flight_distance" required="required">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Is your travel purpose personal?</h5>
+                            <input type="number" min="0" max="1" step="1" name="type_of_travel_personal" id="type_of_travel_personal" required="required">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Average service rating:</h5>
+                            <input type="number" min="0.9" max="5.0" step="0.1" name="average_service_rating" id="average_service_rating" required="required">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row"> 
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Online boarding:</h5>
+                            <input type="number" min="0" max="5" step="1" name="online_boarding" id="online_boarding" required="required">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Is your class Economy?</h5>
+                            <input type="number" min="0" max="1" step="1" name="class_economy" id="class_economy" required="required">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Inflight entertainment:</h5>
+                            <input type="number" min="0" max="5" step="1" name="inflight_entertainment" id="inflight_entertainment" required="required">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Seat comfort:</h5>
+                            <input type="number" min="0" max="5" step="1" name="seat_comfort" id="seat_comfort" required="required">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Age:</h5>
+                            <input type="number" min="7" max="85" step="1" name="age" id="age" required="required">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Is the customer disloyal to the airline?</h5>
+                            <input type="number" min="0" max="1" step="1" name="customer_type_disloyal" id="customer_type_disloyal" required="required">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <!-- Submit -->
+            <input type="submit" value="Submit" class="btn btn-primary submit-button">
+        </form>
+        <br>
+        <h3 class="predict-dec">{{ prediction_text }}</h3> 
+        <br>
+        <p class="copyright">Copyrights 2023 Sayam Kumar</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</body>
+</html>

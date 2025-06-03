@@ -1,0 +1,4 @@
+{
+    "baseline_acc_threshold": 90,
+    "baseline_cv_acc_threshold": 90
+}
